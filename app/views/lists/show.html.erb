@@ -1,6 +1,10 @@
 <h1><%= @list.name %></h1>
 <ul>
-   <% @movies.each do |movie| %>
-    <li><%= link_to movie.title, movie_path(movie) %></li>
+   <% @list.movies.all.each do |movie| %>
+    <li><%= movie.title %> <%= link_to "Delete",
+    list_path(@list),
+    data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %></li>
   <% end %>
 </ul>
+
+<p><%= link_to "+ Movie to list", new_bookmark_path(@list) %></p>
