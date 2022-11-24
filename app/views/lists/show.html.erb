@@ -1,19 +1,22 @@
 <div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://milwaukeerecord.com/wp-content/uploads/2022/10/niccage1.jpg)">
   <h1><%= @list.name %></h1>
 </div>
+<div class="d-flex p-2 justify-content-between flex-wrap">
   <% @list.movies.each do |movie| %>
     <% bookmark = Bookmark.find_by(list: @list, movie: movie) %>
-      <div class="cards">
-        <div class="">
-          <div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= movie.poster_url %>)">
-            <%= movie.title %>
-          </div>
-          <button class="btn btn-warning text-decoration-none text-white"><%= link_to "Delete",
+    <div class="card m-2 border-0 card-shadow rounded" style="width: 18rem;">
+      <img class="card-img-top rounded-top" src="<%= movie.poster_url %>" alt="<%= movie.title %> poster">
+      <div class="card-body">
+        <h5 class="card-title"><strong><%= movie.title %></strong></h5>
+        <p class="card-text"><em><%= bookmark.comment %></em></p>
+        <button class="btn btn-warning"><%= link_to "Delete",
     bookmark_path(bookmark),
-    data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %></button>
-        </div>
+    data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, :style=>'color: white; text-decoration: none;' %></button>
       </div>
-
+    </div>
   <% end %>
-<button class="btn btn-success text-decoration-none text-white"><%= link_to "+ Movie to list", new_list_bookmark_path(@list) %></button>
-<button class="btn btn-success text-decoration-none text-white"><%= link_to "Back to lists", lists_path(@list) %></button>
+</div>
+<div class="p-4">
+  <button class="btn btn-success"><%= link_to "+ Movie to list", new_list_bookmark_path(@list), :style=>'color: white; text-decoration: none;'%></button>
+  <button class="btn btn-success"><%= link_to "Back to lists", lists_path(@list), :style=>'color: white; text-decoration: none;' %></button>
+</div>
